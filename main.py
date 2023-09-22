@@ -3,6 +3,7 @@ import numpy as np
 import math
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize_scalar
+import sys
 
 # Read the data from the Excel file
 df = pd.read_excel('file_omega_Re.xlsx')
@@ -35,6 +36,29 @@ fig, ax = plt.subplots(figsize=(12, 9))
 
 # Initialize the 'G' column in the DataFrame
 df['G'] = np.nan
+
+
+# main.py
+
+
+
+
+def perform_analysis(excel_file_path):
+    try:
+        df = pd.read_excel(excel_file_path)
+        # Your analysis code here using the 'df' DataFrame
+        # Replace this with your actual analysis code
+        print("Analysis performed using file:", excel_file_path)
+    except Exception as e:
+        print(f"Error reading Excel file or performing analysis: {str(e)}")
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: main.py <excel_file_path>")
+        sys.exit(1)
+
+    excel_file_path = sys.argv[1]
+    perform_analysis(excel_file_path)
 
 
 # Calculate the Euclidean distance between the reference plot and the current plot
