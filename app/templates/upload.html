@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Include Plotly JavaScript -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+        function uploadFile() {
+            var fileInput = document.getElementById('fileInput');
+            var file = fileInput.files[0];
+            var formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                Plotly.newPlot('plot1', JSON.parse(data.fig1));
+                Plotly.newPlot('plot2', JSON.parse(data.fig2));
+            })
+            .catch(error => console.error(error));
+        }
+    </script>
+</head>
+<body>
+<form onsubmit="event.preventDefault(); uploadFile();">
+    <input type="file" id="fileInput" name="file">
+    <button type="submit">Upload</button>
+</form>
+<!-- Placeholder for the first plot -->
+<div id="plot1" style="height: 400px;"></div>
+<!-- Placeholder for the second plot -->
+<div id="plot2" style="height: 400px;"></div>
+</body>
+</html>
